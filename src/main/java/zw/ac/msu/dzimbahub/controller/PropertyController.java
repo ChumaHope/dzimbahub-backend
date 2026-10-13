@@ -1,0 +1,5 @@
+package zw.ac.msu.dzimbahub.controller;
+import org.springframework.web.bind.annotation.*; import zw.ac.msu.dzimbahub.model.Property; import zw.ac.msu.dzimbahub.repository.PropertyRepository; import zw.ac.msu.dzimbahub.service.RecommendationService; import java.util.*;
+@RestController @RequestMapping("/api") public class PropertyController { private final PropertyRepository repo; private final RecommendationService rec; public PropertyController(PropertyRepository r,RecommendationService s){repo=r;rec=s;}
+@GetMapping("/properties") public List<Property> all(){return repo.findAllByOrderByRatingDesc();} @GetMapping("/properties/{id}") public Property one(@PathVariable Long id){return repo.findById(id).orElseThrow();}
+@PostMapping("/recommendations") public List<Property> recommend(@RequestBody Map<String,Object> b){double budget=((Number)b.getOrDefault("budget",0)).doubleValue();String area=String.valueOf(b.getOrDefault("area",""));String room=String.valueOf(b.getOrDefault("roomType",""));boolean furnished=Boolean.parseBoolean(String.valueOf(b.getOrDefault("furnished",false)));return rec.recommend(repo.findAll(),budget,area,room,furnished);}}

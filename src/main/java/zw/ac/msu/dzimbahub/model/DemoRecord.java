@@ -1,0 +1,3 @@
+package zw.ac.msu.dzimbahub.model;
+import jakarta.persistence.*; import java.time.LocalDateTime;
+@Entity @Table(name="demo_records") public class DemoRecord { @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id; private String type; private Long propertyId; private String name; private Integer rating; @Column(length=2000) private String content; private LocalDateTime createdAt=LocalDateTime.now(); public Long getId(){return id;} public String getType(){return type;} public void setType(String v){type=v;} public void setPropertyId(Long v){propertyId=v;} public void setName(String v){name=v;} public void setRating(Integer v){rating=v;} public void setContent(String v){content=v;} }
